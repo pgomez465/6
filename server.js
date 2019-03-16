@@ -14,6 +14,7 @@ var wss = new WebSocket.Server({ server: server});
 // Broadcast message to all clients connected to server
 wss.broadcast = function(data) {
     this.clients.forEach((client) => {
+        console.log("sending")
         client.send(data);
     });
 };
@@ -22,7 +23,6 @@ wss.broadcast = function(data) {
 wss.on('connection', function(ws) {
     ws.on('message', function(message) {
         console.log('received');
-        console.log('received: %s', message);
         wss.broadcast(message);
     });
 });
