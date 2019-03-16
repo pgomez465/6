@@ -1,0 +1,16 @@
+{
+  "name": "videochat",
+  "version": "1.0.0",
+  "description": "A server to handle peer-to-peer video chats using webRTC",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Eric Burdett",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "ws": "^6.2.0"
+  }
+}
