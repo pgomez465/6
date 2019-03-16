@@ -19,7 +19,7 @@ function start(isCaller) {
     peerConnection.addStream(localStream);
 
     if (isCaller) {
-        peerConnection.createOffer(gotDescription, (error) => {console.log(error);});
+        peerConnection.createOffer(gotDescription, (error) => {console.log('sending offer: ' + error);});
     }
 }
 
@@ -51,7 +51,7 @@ function gotMessageFromServer(message) {
     if (signal.sdp) {
         peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp), function() {
             if(signal.sdp.type == 'offer') {
-                peerConnection.createAnswer(gotDescription, (error) => {console.log(error);});
+                peerConnection.createAnswer(gotDescription, (error) => {console.log('received offer: ' + error);});
             }
         });
     }
