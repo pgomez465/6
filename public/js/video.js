@@ -56,7 +56,7 @@ function gotMessageFromServer(message) {
         });
     }
     else if (signal.ice) {
-        peerConnection.addIceCandidate(new RTCIceCandidate(signal.candidate));
+        peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice));
     }
 }
 
