@@ -58,7 +58,7 @@ function prepare() {
     localVideo = document.getElementById('localVideo');
     remoteVideo = document.getElementById('remoteVideo');
 
-    serverConnection = new WebSocket('ws://127.0.0.1:5000');
+    serverConnection = new WebSocket('ws://murmuring-wave-91490.herokuapp.com/');
     serverConnection.onmessage = gotMessageFromServer;
 
     const constraints = {video: true};
