@@ -22,7 +22,7 @@ wss.broadcast = function(data) {
 // Handler for incoming connections
 wss.on('connection', function(ws) {
     ws.on('message', function(message) {
-        console.log('received');
+        console.log('received: ' + message);
         wss.broadcast(message);
     });
 });
