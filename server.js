@@ -47,6 +47,9 @@ wss.on('connection', function(socket) {
     socket.on('message', function(message) {
         const signal = JSON.parse(message);
 
+        // Save the client to be used later
+        clients.saveClient(signal.hostId, socket);
+
         console.log("Message from host " + signal.hostId + ": " + message);
 
         // Broadcast just the ice/sdp message
@@ -57,8 +60,6 @@ wss.on('connection', function(socket) {
             broadcastToRoomMembers(signal.hostId, message);
         }
         else if (signal.setup) {
-            // Save the client to be used later
-            clients.saveClient(signal.hostId, socket);
 
             console.log("Received initial setup message from hostId " + signal.hostId);
         }
