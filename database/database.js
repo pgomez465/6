@@ -66,7 +66,7 @@ function dbConnectionError(error) {
 }
 
 // Non-Endpoint function
-function getHostIdsInRoom(hostId, clientList, message) {
+function getHostIdsInRoom(hostId, clients, message) {
     var client = new pg.Client(connectionString);
     client.connect();
 
@@ -81,15 +81,22 @@ function getHostIdsInRoom(hostId, clientList, message) {
             }
 
             // Broadcast messages only to clients within the same room
-            var keys = Object.keys(clientList);
+            var keys = Object.keys(clients.clientList);
             console.log("Available clients: " + JSON.stringify(keys));
 
             for (var i = 0; i < keys.length; ++i) {
+
+                // Check for closed connections and remove them
+                if (clients.clientList[keys[i]].readyState != clients.clientList[keys[i]].OPEN) {
+                    clients.removeClient(keys[i]);
+                    continue;
+                }
+
                 // If the list of ids includes the current client, then send the message
                 if (ids.includes(keys[i])) {
                     console.log("Sending message to host with id: " + keys[i])
                     console.log("Here is the message: " + message);
-                    clientList[keys[i]].send(message);
+                    clients.clientList[keys[i]].send(message);
                 }
             }
 

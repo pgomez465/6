@@ -28,9 +28,11 @@ class Clients {
     }
 
     saveClient(id, client) {
-        console.log("before save");
         this.clientList[id] = client;
-        console.log("after save");
+    }
+
+    removeClient(id) {
+        delete this.clientList[id];
     }
 }
 
@@ -67,5 +69,5 @@ wss.on('connection', function(socket) {
 });
 
 function broadcastToRoomMembers(id, message) {
-    db.getHostIdsInRoom(id, clients.clientList, message);
+    db.getHostIdsInRoom(id, clients, message);
 }
