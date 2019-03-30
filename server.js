@@ -38,7 +38,7 @@ class Clients {
 var clients = new Clients();
 
 // Use web sockets for signaling
-var wss = new WebSocket.Server({ server: server});
+var wss = new WebSocket.Server({ server: server, pingtimeout: 60000});
 
 // Handler for incoming connections
 wss.on('connection', function(socket) {
