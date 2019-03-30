@@ -70,6 +70,7 @@ function prepare() {
 
     serverConnection = new WebSocket(url);
     serverConnection.onmessage = gotMessageFromServer;
+    serverConnection.onopen = () => {serverConnection.send(JSON.stringify({"hostId" : hostId, "setup" : true})); console.log("sending setup")};
 
     const constraints = {video: true};
 
@@ -90,7 +91,6 @@ function videoSuccess(mediaStream) {
 
     var hostId = document.getElementById("hostId").innerHTML;
 
-    serverConnection.onopen = () => {serverConnection.send(JSON.stringify({"hostId" : hostId, "setup" : true})); console.log("sending setup")};
 }
 
 function videoError(error) {
