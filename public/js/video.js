@@ -65,7 +65,7 @@ function gotMessageFromServer(message) {
 function prepare() {
     localVideo = document.getElementById('localVideo');
     remoteVideo = document.getElementById('remoteVideo');
-    var hostId = document.getElementById('hostId');
+    var hostId = document.getElementById('hostId').innerHTML;
 
     var url = location.origin.replace(/^http/, 'ws');
 
@@ -89,9 +89,6 @@ function videoSuccess(mediaStream) {
     peerConnection.onicecandidate = gotIceCandidate;
     peerConnection.onaddstream = gotRemoteStream;
     peerConnection.addStream(localStream);
-
-    var hostId = document.getElementById("hostId").innerHTML;
-
 }
 
 function videoError(error) {
