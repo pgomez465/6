@@ -3,17 +3,37 @@
 <head>
     <title>WebRTC Video Chat</title>
     <script src='./js/video.js'></script>
+    <script src='./js/ajax.js'></script>
     <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script>
+        window.addEventListener("beforeunload", function (e) {
+            removeHost();
+        });
+    </script>
 </head>
 
 <body>
+    <h3>Name: <div id="hostName"></div><div id="hostId" hidden></div></h3><br>
+
+    <select id="rooms">
+        <option value="lobby_home">Lobby</option>
+    </select>
+    <button onclick="joinRoom()">Join Room</button>
+    <button onclick="createRoom()">Create Room</button>
+
+    <script>
+        var hostName = prompt("Enter your name:");
+        document.getElementById("hostName").innerHTML = hostName;
+        addHost()
+        getRooms();
+    </script>
+
     <video id="localVideo" autoplay playsinline></video>
     <video id="remoteVideo" autoplay playsinline></video>
 
     <br>
 
-    <input type="button" id="start" onclick="start(true)" value="Start">
-    <script>prepare()</script>
+    <input type="button" id="start" onclick="makeCall()" value="Start">
 </body>
 
 </html>
