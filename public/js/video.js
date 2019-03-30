@@ -13,21 +13,13 @@ var peerConnectionConfig = {'iceservers': [{'url': 'stun:stun.services.mozilla.c
 var serverConnection;
 
 function makeCall() {
-    var hostId = document.getElementById("hostId").innerHTML;
-
-    peerConnection.createOffer((description) => {
-        peerConnection.setLocalDescription(description, () => {
-            serverConnection.send(JSON.stringify({"hostId": hostId, "sdp": description}));
-        }, () => { console.log('Set Description Error')});
-    }
-    ,(error) => {
-        console.log('sending offer: ' + error);
-    });
+    peerConnection.createOffer(gotDescription, (error) => { console.log("create offer error: " + error);});
 }
 
 function gotIceCandidate(event) {
     if (event.candidate != null) {
         var hostId = document.getElementById("hostId").innerHTML;
+        console.log("sending ice");
         serverConnection.send(JSON.stringify({"hostId": hostId, "ice": event.candidate}));
     }
 }
@@ -42,6 +34,7 @@ function gotDescription(description) {
 
     console.log('Got Description');
     peerConnection.setLocalDescription(description, function() {
+        console.log("sending sdp");
         serverConnection.send(JSON.stringify({"hostId": hostId, 'sdp': description}));
     }, function() {console.log('Set Description Error')});
 }
@@ -97,6 +90,7 @@ function videoSuccess(mediaStream) {
 
     var hostId = document.getElementById("hostId").innerHTML;
 
+    console.log("sending setup");
     serverConnection.send(JSON.stringify({"hostId" : hostId, "setup" : true}));
 }
 
