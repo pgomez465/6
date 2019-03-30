@@ -92,6 +92,9 @@ function addHost() {
 function removeHost() {
     var hostId = document.getElementById("hostId").innerHTML;
 
+    serverConnection.onclose = function(){};
+    serverConnection.close();
+
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
