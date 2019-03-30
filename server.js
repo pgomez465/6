@@ -67,7 +67,5 @@ wss.on('connection', function(socket) {
 });
 
 function broadcastToRoomMembers(id, message) {
-    // Check database for other hosts in the same room
-
-    var hostIds = db.getHostIdsInRoom(id, clients.clientList, message);
+    db.getHostIdsInRoom(id, clients.clientList, message);
 }
