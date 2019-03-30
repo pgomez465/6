@@ -8,6 +8,7 @@ function getRooms(request, response) {
 
     client.query('SELECT * FROM room;')
         .then(res => response.json(res.rows))
+        .then(res => client.end(closeError))
         .catch(e => console.error(e.stack));
 }
 
@@ -17,6 +18,7 @@ function getHosts(request, response) {
 
     client.query('SELECT * FROM host;')
         .then(res => response.json(res.rows))
+        .then(res => client.end(closeError))
         .catch(e => console.error(e.stack));
 }
 
@@ -26,6 +28,7 @@ function addHost(request, response) {
 
     client.query('INSERT INTO host VALUES (DEFAULT, $1, NULL) RETURNING host_id;', [request.body.name])
         .then(res => response.json(res.rows[0]))
+        .then(res => client.end(closeError))
         .catch(e => console.error(e.stack));
 }
 
@@ -35,6 +38,7 @@ function addRoom(request, response) {
 
     client.query('INSERT INTO room VALUES (DEFAULT, $1);', [request.body.name])
         .then(res => response.json(res.rows))
+        .then(res => client.end(closeError))
         .catch(e => console.error(e.stack));
 }
 
@@ -44,6 +48,7 @@ function addHostToRoom(request, response) {
 
     client.query('UPDATE host SET room_id = $1 WHERE host_id = $2;', [request.body.roomId, request.body.hostId])
         .then(res => response.json(res.rows))
+        .then(res => client.end(closeError))
         .catch(e => console.error(e.stack));
 }
 
@@ -53,6 +58,7 @@ function removeHost(request, response) {
 
     client.query('DELETE FROM host WHERE host_id = $1;', [request.body.hostId])
         .then(res => response.json(res.rows))
+        .then(res => client.end(closeError))
         .catch(e => console.error(e.stack));
 }
 
@@ -101,7 +107,12 @@ function getHostIdsInRoom(hostId, clients, message) {
             }
 
         })
+        .then(res => client.end(closeError))
         .catch(e => console.error(e.stack));
+}
+
+function closeError(err) {
+    if (err) throw err;
 }
 
 module.exports = {
