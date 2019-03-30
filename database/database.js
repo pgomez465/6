@@ -94,6 +94,7 @@ function getHostIdsInRoom(hostId, clients, message) {
 
                 // Check for closed connections and remove them
                 if (clients.clientList[keys[i]].readyState != clients.clientList[keys[i]].OPEN) {
+                    console.log("remove hostId: " + keys[i]);
                     clients.removeClient(keys[i]);
                     continue;
                 }
