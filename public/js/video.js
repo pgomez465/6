@@ -65,6 +65,7 @@ function gotMessageFromServer(message) {
 function prepare() {
     localVideo = document.getElementById('localVideo');
     remoteVideo = document.getElementById('remoteVideo');
+    var hostId = document.getElementById('hostId');
 
     var url = location.origin.replace(/^http/, 'ws');
 
