@@ -91,7 +91,8 @@ function videoSuccess(mediaStream) {
     var hostId = document.getElementById("hostId").innerHTML;
 
     console.log("sending setup");
-    serverConnection.send(JSON.stringify({"hostId" : hostId, "setup" : true}));
+
+    serverConnection.onopen = () => serverConnection.send(JSON.stringify({"hostId" : hostId, "setup" : true}));
 }
 
 function videoError(error) {
