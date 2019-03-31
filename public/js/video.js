@@ -43,6 +43,7 @@ function gotDescription(description) {
     console.log('Got Description');
     peerConnection.setLocalDescription(description, function() {
         console.log("sending sdp");
+        document.getElementById('answerdiv').innerHTML = "<h1>sent an answer!</h1>";
         serverConnection.send(JSON.stringify({"hostId": hostId, 'sdp': description}));
     }, function() {console.log('Set Description Error')});
 }
@@ -59,6 +60,7 @@ function gotMessageFromServer(message) {
     if (signal.sdp) {
         peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp), function () {
             if (signal.sdp.type == 'offer') {
+                document.getElementById("offerdiv").innerHTML = "<h1>Got an Offer!</h1>";
                 peerConnection.createAnswer(gotDescription, (error) => {
                     console.log('received offer: ' + error);
                 });
