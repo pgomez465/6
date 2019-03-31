@@ -16,6 +16,14 @@ function makeCall() {
     peerConnection.createOffer(gotDescription, (error) => { console.log("create offer error: " + error);});
 }
 
+function resetConn() {
+    peerConnection.onclose = function(){};
+    peerConnection.close();
+
+    serverConnection.onclose = function(){};
+    serverConnection.close();
+}
+
 function gotIceCandidate(event) {
     if (event.candidate != null) {
         var hostId = document.getElementById("hostId").innerHTML;
