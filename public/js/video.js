@@ -83,7 +83,7 @@ function prepare() {
     serverConnection.onmessage = gotMessageFromServer;
     serverConnection.onopen = () => {serverConnection.send(JSON.stringify({"hostId" : hostId, "setup" : true})); console.log("sending setup")};
 
-    const constraints = {video: true};
+    const constraints = {video: true, audio: true};
 
     navigator.mediaDevices.getUserMedia(constraints)
         .then(videoSuccess)
