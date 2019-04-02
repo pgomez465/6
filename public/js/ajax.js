@@ -5,7 +5,7 @@ function getRooms() {
         if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) {   // XMLHttpRequest.DONE == 4
             var result = JSON.parse(xmlhttp.responseText);
 
-            var html = "";
+            var html = "<option value=\"Lobby\">Lobby</option>";
             for (var i = 0; i < result.length; ++i) {
                 var name = result[i].room_name;
                 var id = result[i].room_id;
@@ -26,6 +26,11 @@ function joinRoom() {
     var hostId = document.getElementById("hostId").innerHTML;
     var roomSelect = document.getElementById("rooms");
 
+    // Don't attempt to join a room if we are simply in the lobby
+    if (roomSelect.selectedIndex == 0) {
+        return;
+    }
+
     var currentRoomId = roomSelect.options[roomSelect.selectedIndex].value;
     console.log("Current Room: " + currentRoomId);
 
@@ -33,6 +38,7 @@ function joinRoom() {
 
      xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) {   // XMLHttpRequest.DONE == 4
+            document.getElementById("roomName").innerHTML = roomSelect.options[roomSelect.selectedIndex].text;
             console.log("Successfully added host to room");
         }
         else if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status != 200) {

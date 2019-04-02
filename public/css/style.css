@@ -1,0 +1,16 @@
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.navbar-nav > li {
+  padding-left:10px;
+  padding-right:10px;
+}
+
+video {
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+}

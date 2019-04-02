@@ -1,10 +1,5 @@
 'use strict';
 
-navigator.getUserMedia = navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
-window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-window.RTCIceCandidate = window.RTCIceCandidate || window.mozRTCIceCandidate || window.webkitRTCIceCandidate;
-window.RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription;
-
 var localStream;
 var localVideo;
 var remoteVideo;
@@ -43,7 +38,6 @@ function gotDescription(description) {
     console.log('Got Description');
     peerConnection.setLocalDescription(description, function() {
         console.log("sending sdp");
-        document.getElementById('answerdiv').innerHTML = "<h1>sent an answer!</h1>";
         serverConnection.send(JSON.stringify({"hostId": hostId, 'sdp': description}));
     }, function() {console.log('Set Description Error')});
 }
@@ -60,7 +54,6 @@ function gotMessageFromServer(message) {
     if (signal.sdp) {
         peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp), function () {
             if (signal.sdp.type == 'offer') {
-                document.getElementById("offerdiv").innerHTML = "<h1>Got an Offer!</h1>";
                 peerConnection.createAnswer(gotDescription, (error) => {
                     console.log('received offer: ' + error);
                 });
@@ -83,7 +76,7 @@ function prepare() {
     serverConnection.onmessage = gotMessageFromServer;
     serverConnection.onopen = () => {serverConnection.send(JSON.stringify({"hostId" : hostId, "setup" : true})); console.log("sending setup")};
 
-    const constraints = {video: true, audio: true};
+    const constraints = {video: true/*, audio: true*/};
 
     navigator.mediaDevices.getUserMedia(constraints)
         .then(videoSuccess)
@@ -103,4 +96,5 @@ function videoSuccess(mediaStream) {
 
 function videoError(error) {
     console.log("Error with getUserMedia: " + error);
+    alert("Error!\nYou do not have a camera and/or a microphone to use the video chat. Please connect and refresh the page.");
 }
