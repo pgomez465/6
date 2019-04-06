@@ -71,7 +71,7 @@ function prepare() {
     remoteVideo = document.getElementById('remoteVideo');
     var hostId = document.getElementById('hostId').innerHTML;
 
-    var url = location.origin.replace(/^http/, 'ws');
+    var url = location.origin.replace(/^http/, 'wss');
 
     serverConnection = new WebSocket(url);
     serverConnection.onmessage = gotMessageFromServer;
