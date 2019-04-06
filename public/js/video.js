@@ -4,7 +4,7 @@ var localStream;
 var localVideo;
 var remoteVideo;
 var peerConnection;
-var peerConnectionConfig = {'iceservers': [{'url': 'stun:stun.services.mozilla.com'}, {'url': 'stun:stun.l.google.com:19302'}]};
+var peerConnectionConfig = {'iceServers': [{ 'urls': 'stun:stun.l.google.com:19302' }]};
 var serverConnection;
 
 function makeCall() {
