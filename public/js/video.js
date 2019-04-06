@@ -62,7 +62,7 @@ function gotMessageFromServer(message) {
     }
     else if (signal.ice) {
         peerConnection.addIceCandidate(new RTCIceCandidate(signal.ice))
-        .catch((error) => console.log("Add ice candidate error: " + error + "\n" + signal.ice));
+        .catch((error) => console.log("Add ice candidate error: " + error + "\n" + JSON.stringify(signal.ice)));
     }
 }
 
