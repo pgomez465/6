@@ -43,7 +43,7 @@ function gotDescription(description) {
 }
 
 function gotMessageFromServer(message) {
-    console.log("Got message from server: " + message);
+    console.log("Got message from server: " + message.data);
 
     var signal = JSON.parse(message.data);
 
@@ -55,7 +55,7 @@ function gotMessageFromServer(message) {
         peerConnection.setRemoteDescription(new RTCSessionDescription(signal.sdp), function () {
             if (signal.sdp.type == 'offer') {
                 peerConnection.createAnswer(gotDescription, (error) => {
-                    console.log('received offer: ' + error);
+                    console.log('received offer: ' + error + "\n" + JSON.stringify(signal.sdp));
                 });
             }
         });
